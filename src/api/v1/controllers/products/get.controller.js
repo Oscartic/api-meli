@@ -1,13 +1,34 @@
 const axios = require('axios');
 
+const getDescription = async (id) => {
+    try {       
+        const url = `https://api.mercadolibre.com/items/${id}/description`;
+        console.log(id, url)
+        const { data } = await axios.get(url);
+        return data; 
+    } catch (error) {
+        console.log('getDescription', error);
+
+    }
+}
+
+const getProduct = async (id) => {
+    try {        
+        const url = `https://api.mercadolibre.com/items/${id}`;
+        const { data } = await axios.get(url);
+        return data;
+    } catch (error) {
+        console.log('getProduct', error);
+    }
+}
+
 const get = async (req, res) => {
     try {        
-        const { search } = req.query;
-        const url = `https://api.mercadolibre.com/sites/MLA/search?q='${search}'`;
-        const { data } = await axios.get(url);
-        const { available_filters } = data;
-        // console.log(available_filters[0].values)
-        return res.status(200).send(data);
+        const { id } = req.params;
+        const product = await getProduct(id);
+        const description = await getDescription(id);
+
+        return res.status(200).send({product, description});
     } catch (error) {
         console.log(error);
         return res.status(500).send({ message: error});
