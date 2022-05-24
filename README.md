@@ -26,11 +26,11 @@
 
 <!-- Status -->
 
-<!-- <h4 align="center"> 
-	🚧  Meli Challenge 🚀 Under construction...  🚧
+<h4 align="center"> 
+	🚧  api-meli 🚀 Under construction...  🚧
 </h4> 
 
-<hr> -->
+<hr>
 
 <p align="center">
   <a href="#dart-about">About</a> &#xa0; | &#xa0; 
@@ -47,6 +47,7 @@
 ## :dart: About ##
 
 Describe your project
+Ciertas busquedas tenian disponible filters > category y no available_filters > categories  
 
 ## :sparkles: Features ##
 
