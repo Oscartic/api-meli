@@ -1,9 +1,5 @@
 const axios = require('axios');
-
-const author = {
-        name: 'Oscar Rene',
-        lastName: 'Ballesteros'
-}
+const { author } = require('../../helpers/miscellaneous');
 
 const formatItems = (items) => {
     return items.map((item) => {
