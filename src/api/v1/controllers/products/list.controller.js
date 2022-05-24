@@ -1,34 +1,50 @@
 const axios = require('axios');
 
-const getDescription = async (id) => {
-    try {       
-        const url = `https://api.mercadolibre.com/items/${id}/description`;
-        console.log(id, url)
-        const { data } = await axios.get(url);
-        return data; 
-    } catch (error) {
-        console.log('getDescription', error);
-
-    }
+const author = {
+        name: 'Oscar Rene',
+        lastName: 'Ballesteros'
 }
 
-const getProduct = async (id) => {
-    try {        
-        const url = `https://api.mercadolibre.com/items/${id}`;
-        const { data } = await axios.get(url);
-        return data;
-    } catch (error) {
-        console.log('getProduct', error);
+const formatItems = (items) => {
+    return items.map((item) => {
+        return {
+            id: item.id,
+            title: item.title,
+            price: {
+                currency: item.prices.presentation.display_currency,
+                amount: item.price,
+                decimals: 00
+            },
+            picture: item.thumbnail,
+            condition: item.condition,
+            free_shipping: item.shipping.free_shipping
+        }
+    });
+};
+
+const formatCategory = (data) => {
+    if(data.filters && data.filters.length > 0) {
+        return data.filters[0].values[0].name;
     }
-}
+    const categories = data.available_filters.filter(e => e.id == 'category')
+    if(categories && categories.length > 0){
+        const majorCategory = categories[0].values.reduce((acc, current) => acc.results > current.results ? acc : acc = current)
+        return majorCategory.name
+    }
+    return "Sin Categoría";
+};
 
 const list = async (req, res) => {
     try {        
-        const { id } = req.params;
-        const product = await getProduct(id);
-        const description = await getDescription(id);
-
-        return res.status(200).send({product, description});
+        const { search } = req.query;
+        const url = `https://api.mercadolibre.com/sites/MLA/search?q='${search}'&limit=4`;
+        const { data } = await axios.get(url);
+        const payload = {
+            author,
+            category: formatCategory(data),
+            items: formatItems(data.results)
+        }
+        return res.status(200).send(payload);
     } catch (error) {
         console.log(error);
         return res.status(500).send({ message: error});
