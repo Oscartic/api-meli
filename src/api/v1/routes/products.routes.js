@@ -4,7 +4,7 @@ const list = require('../controllers/products/list.controller');
 
 const router = express.Router();
 
-router.get('/items', get);
-router.get('/items/:id', list);
+router.get('/items', list);
+router.get('/items/:id', get);
 
 module.exports = router;
