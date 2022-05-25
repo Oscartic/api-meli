@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { author } = require('../../helpers/miscellaneous');
+const { author, getDecimalPart } = require('../../helpers/miscellaneous');
 
 const formatItems = (items) => {
     return items.map((item) => {
@@ -9,7 +9,7 @@ const formatItems = (items) => {
             price: {
                 currency: item.prices.presentation.display_currency,
                 amount: item.price,
-                decimals: 00
+                decimals: getDecimalPart(item.price)
             },
             picture: item.thumbnail,
             condition: item.condition,

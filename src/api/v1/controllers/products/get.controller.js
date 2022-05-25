@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { author } = require('../../helpers/miscellaneous');
+const { author, getDecimalPart } = require('../../helpers/miscellaneous');
 
 const formatItem = (product, description, category) => {
     return {
@@ -9,7 +9,7 @@ const formatItem = (product, description, category) => {
         price: {
             currency: product.currency_id,
             amount: product.price,
-            decimals: product.price,
+            decimals: getDecimalPart(product.price),
         },
         picture: product.pictures.length > 1 ? product.pictures[0].url : product.thumbnail,
         condition: product.condition,
