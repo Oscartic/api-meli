@@ -20,14 +20,14 @@ const formatItems = (items) => {
 
 const formatCategory = (data) => {
     if(data.filters && data.filters.length > 0) {
-        return data.filters[0].values[0].name;
+        return data.filters[0].values[0].path_from_root.map(cat => cat.name);
     }
     const categories = data.available_filters.filter(e => e.id == 'category')
     if(categories && categories.length > 0){
         const majorCategory = categories[0].values.reduce((acc, current) => acc.results > current.results ? acc : acc = current)
-        return majorCategory.name
+        return [majorCategory.name]
     }
-    return "Sin Categoría";
+    return ["Otras categorías"];
 };
 
 const list = async (req, res) => {
@@ -37,7 +37,7 @@ const list = async (req, res) => {
         const { data } = await axios.get(url);
         const payload = {
             author,
-            category: formatCategory(data),
+            categories: formatCategory(data),
             items: formatItems(data.results)
         }
         return res.status(200).send(payload);
