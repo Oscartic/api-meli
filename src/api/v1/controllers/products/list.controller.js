@@ -33,8 +33,10 @@ const formatCategory = (data) => {
 const list = async (req, res) => {
     try {        
         const { search } = req.query;
-        const url = `https://api.mercadolibre.com/sites/MLA/search?q='${search}'&limit=4`;
+        console.log(search)
+        const url = encodeURI(`https://api.mercadolibre.com/sites/MLA/search?q="${search}&limit=4`);
         const { data } = await axios.get(url);
+        console.log(formatCategory(data))
         const payload = {
             author,
             categories: formatCategory(data),
