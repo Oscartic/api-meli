@@ -3,6 +3,8 @@ const morgan = require('morgan');
 const cors = require('cors');
 const productRoutes = require('./api/v1/routes/products.routes');
 
+const PORT = process.env.PORT || 5001;
+
 const app = express();
 // * Pending configured Cors 
 // const corsOptions = {
@@ -14,7 +16,7 @@ app.use(express.json());
 app.use(cors());
 app.use(morgan('dev'));
 app.use('/api/v1', productRoutes); 
-const PORT = process.env.PORT || 3001;
+
 
 app.listen(PORT, () => {
     console.log(`[SERVER][MELIAPI] Listening on port: ${PORT}`);
