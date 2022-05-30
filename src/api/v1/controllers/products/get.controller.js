@@ -15,7 +15,7 @@ const formatItem = (product, description, categories) => {
         condition: product.condition,
         free_shipping: product.free_shipping,
         sold_quantity: product.sold_quantity,
-        description: description.plain_text,
+        description,
         categories
     }
 };
@@ -26,7 +26,10 @@ const getProduct = async (id) => {
         const { data } = await axios.get(url);
         return data;
     } catch (error) {
-        console.log('getProduct', error);
+        return ({
+            status: error.response.status,
+            message: error.response.data.message
+        });
     }
 }
 
@@ -36,8 +39,10 @@ const getDescription = async (id) => {
         const { data } = await axios.get(url);
         return data; 
     } catch (error) {
-        console.log('getDescription', error);
-
+        return ({
+            status: error.response.status,
+            message: error.response.data.message
+        });
     }
 }
 
@@ -47,8 +52,10 @@ const getCategory = async (category) => {
         const { data } = await axios.get(url);
         return [data.name]; 
     } catch (error) {
-        console.log('getDescription', error);
-
+        return ({
+            status: error.response.status,
+            message: error.response.data.message
+        });
     }
 }
 
@@ -56,13 +63,16 @@ const get = async (req, res) => {
     try {        
         const { id } = req.params;
         const product = await getProduct(id);
-        const description = await getDescription(id);
+        console.log()
+        if(product.status === 404) return res.status(404).send({message: `Product with Id ${id} not found!`});
+        const retrieveDesc = await getDescription(id);
+        const description = retrieveDesc.plain_text || retrieveDesc.message;
         const categories = await getCategory(product.category_id);
         const payload = formatItem(product, description, categories);
         return res.status(200).send(payload);
     } catch (error) {
-        console.log(error);
-        return res.status(500).send({ message: error});
+        console.log('get.controller >> ', error);
+        return res.status(500).send({ message: error });
     }
 };
 
