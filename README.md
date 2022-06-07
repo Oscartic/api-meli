@@ -26,9 +26,9 @@
 
 <!-- Status -->
 
-<h4 align="center"> 
+<!-- <h4 align="center"> 
 	🚧  api-meli 🚀 Under construction...  🚧
-</h4> 
+</h4>  -->
 
 <hr>
 
@@ -46,8 +46,8 @@
 
 ## :dart: About ##
 
-Describe your project
-Ciertas busquedas tenian disponible filters > category y no available_filters > categories  
+!note
+Certain searches had available filters > category, not available_filters > categories  
 
 ## :sparkles: Features ##
 
@@ -59,11 +59,8 @@ Ciertas busquedas tenian disponible filters > category y no available_filters > 
 
 The following tools were used in this project:
 
-- [Expo](https://expo.io/)
+- [Express](https://expressjs.com//)
 - [Node.js](https://nodejs.org/en/)
-- [React](https://pt-br.reactjs.org/)
-- [React Native](https://reactnative.dev/)
-- [TypeScript](https://www.typescriptlang.org/)
 
 ## :white_check_mark: Requirements ##
 
@@ -84,7 +81,7 @@ $ npm
 # Run the project
 $ npm run dev
 
-# The server will initialize in the <http://localhost:3001>
+# The server will initialize in the <http://localhost:5001>
 ```
 
 ## :memo: License ##
