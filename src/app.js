@@ -18,6 +18,8 @@ app.use(morgan('dev'));
 app.use('/api/v1', productRoutes); 
 
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`[SERVER][MELIAPI] Listening on port: ${PORT}`);
 });
+
+module.exports = { app, server } ;
